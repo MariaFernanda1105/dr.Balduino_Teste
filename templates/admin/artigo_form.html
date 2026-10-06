@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Editar' if article else 'Novo' }} artigo — Painel editorial{% endblock %}
+{% block extra_css %}
+<style>
+    .editor-shell { max-width: 1120px; }
+    .editor-card { padding: clamp(1.4rem, 3vw, 2.4rem); border: 1px solid var(--line); border-radius: 12px; background: var(--white); box-shadow: var(--shadow-soft); }
+    .editor-help { display: flex; gap: .7rem; align-items: flex-start; margin-bottom: 1.5rem; padding: .9rem 1rem; border-left: 3px solid var(--teal); background: var(--mist); color: var(--muted); font-size: .82rem; }
+    .editor-help i { color: var(--teal); font-size: 1rem; }
+    .ck-editor__editable_inline { min-height: 420px; }
+    .ck.ck-editor__main > .ck-editor__editable { border-color: var(--line); }
+    .ck.ck-toolbar { border-color: var(--line); background: #f9fcfc; }
+    .ck.ck-editor__editable:not(.ck-focused) { border-color: var(--line); }
+    .ck.ck-editor__editable.ck-focused { border-color: var(--teal); box-shadow: 0 0 0 2px rgba(8, 171, 178, .12); }
+    .ck-content figure.image-style-side { float: right; margin-left: 1.5rem; max-width: 50%; }
+    .ck-content figure.image-style-align-left { float: left; margin-right: 1.5rem; }
+    .ck-content figure.image-style-align-center { margin-right: auto; margin-left: auto; }
+    .ck-content figure.image-style-align-right { margin-left: auto; }
+    @media (max-width: 767px) { .ck.ck-toolbar { overflow-x: auto; flex-wrap: nowrap; } .ck-editor__editable_inline { min-height: 360px; } }
+</style>
+{% endblock %}
+{% block content %}
+<section class="admin-shell section">
+    <div class="container editor-shell">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4"><div><span class="section-label">Editor editorial</span><h1 class="section-title mb-0">{{ 'Editar artigo' if article else 'Novo artigo' }}.</h1></div><a class="btn btn-outline-primary" href="{{ url_for('admin.admin_artigos') }}"><i class="bi bi-arrow-left me-2"></i>Voltar aos artigos</a></div>
+        <form method="post" enctype="multipart/form-data" id="article-form">
+            <div class="editor-card">
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="mb-3"><label class="form-label" for="title">Título do artigo</label><input class="form-control form-control-lg" id="title" name="title" maxlength="200" required value="{{ article.title if article else '' }}"></div>
+                        <div class="mb-4"><label class="form-label" for="summary">Resumo</label><textarea class="form-control" id="summary" name="summary" rows="3" maxlength="500" required placeholder="Explique em poucas linhas o que o leitor encontrará neste conteúdo.">{{ article.summary if article else '' }}</textarea></div>
+                    </div>
+                    <div class="col-lg-4"><label class="form-label" for="status">Status de publicação</label><select class="form-select" id="status" name="status"><option value="rascunho" {% if not article or article.status == 'rascunho' %}selected{% endif %}>Rascunho — não aparece no site</option><option value="publicado" {% if article and article.status == 'publicado' %}selected{% endif %}>Publicado — visível no site</option></select><div class="editor-help mt-3 mb-0"><i class="bi bi-lightbulb"></i><span>Você pode salvar como rascunho para revisar e publicar depois.</span></div></div>
+                </div>
+                <div class="mb-3"><label class="form-label" for="editor">Conteúdo do artigo</label><div class="editor-help"><i class="bi bi-magic"></i><span>Use a barra de ferramentas para formatar textos, criar títulos, inserir links, imagens, citações e tabelas. Imagens podem ser redimensionadas, alinhadas e posicionadas no ponto de inserção.</span></div><textarea id="editor" name="content" required>{{ article.content|safe if article else '' }}</textarea></div>
+                <div class="row align-items-end g-3 mt-2"><div class="col-lg-8"><label class="form-label" for="cover_image">Imagem de capa</label><input class="form-control" id="cover_image" type="file" name="cover_image" accept="image/png,image/jpeg,image/webp"><div class="form-text">JPG, PNG ou WebP. A imagem inserida no corpo usa o botão de upload do editor.</div></div><div class="col-lg-4 d-flex justify-content-lg-end gap-2"><a class="btn btn-outline-secondary" href="{{ url_for('admin.admin_artigos') }}">Cancelar</a><button class="btn btn-primary" type="submit"><i class="bi bi-check2-circle me-2"></i>Salvar artigo</button></div></div>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+{% block extra_js %}
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+<script>
+(function () {
+    const textarea = document.querySelector('#editor');
+    const form = document.querySelector('#article-form');
+    if (!textarea || !form || typeof ClassicEditor === 'undefined') return;
+
+    ClassicEditor.create(textarea, {
+        toolbar: {
+            items: [
+                'undo', 'redo', '|', 'heading', '|',
+                'fontFamily', 'fontSize', 'fontColor', 'fontBackgroundColor', '|',
+                'bold', 'italic', 'underline', 'strikethrough', '|',
+                'alignment', 'bulletedList', 'numberedList', 'outdent', 'indent', '|',
+                'link', 'uploadImage', 'blockQuote', 'insertTable', 'horizontalLine', 'removeFormat'
+            ],
+            shouldNotGroupWhenFull: true
+        },
+        heading: { options: [
+            { model: 'paragraph', title: 'Parágrafo', class: 'ck-heading_paragraph' },
+            { model: 'heading1', view: 'h1', title: 'Título 1', class: 'ck-heading_heading1' },
+            { model: 'heading2', view: 'h2', title: 'Título 2', class: 'ck-heading_heading2' },
+            { model: 'heading3', view: 'h3', title: 'Título 3', class: 'ck-heading_heading3' },
+            { model: 'heading4', view: 'h4', title: 'Título 4', class: 'ck-heading_heading4' }
+        ] },
+        fontFamily: { options: ['default', 'Kanit', 'Arial', 'Georgia', 'Verdana', 'Times New Roman'] },
+        fontSize: { options: ['tiny', 'small', 'default', 'big', 'huge'] },
+        fontColor: { colors: [
+            { color: '#033651', label: 'Azul institucional' },
+            { color: '#08abb2', label: 'Turquesa' },
+            { color: '#6b818b', label: 'Cinza' },
+            { color: '#d11a2a', label: 'Vermelho' },
+            { color: '#1b7a3a', label: 'Verde' },
+            { color: '#000000', label: 'Preto' }
+        ] },
+        image: { toolbar: ['imageTextAlternative', 'toggleImageCaption', '|', 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight', 'imageStyle:side', 'resizeImage'] },
+        simpleUpload: { uploadUrl: '{{ url_for("admin.upload_image") }}' },
+        link: { addTargetToExternalLinks: true, defaultProtocol: 'https://' },
+        table: { contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'] }
+    }).then(function (editor) {
+        form.addEventListener('submit', function (event) {
+            textarea.value = editor.getData();
+            if (!textarea.value.replace(/<[^>]*>/g, '').trim()) {
+                event.preventDefault();
+                editor.editing.view.focus();
+                alert('Adicione o conteúdo do artigo antes de salvar.');
+            }
+        });
+    }).catch(function (error) { console.error('Falha ao iniciar o editor:', error); });
+})();
+</script>
+{% endblock %}

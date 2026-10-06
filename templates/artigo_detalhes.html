@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}{{ article.title }} — Dr. Balduino Andrade{% endblock %}
+{% block meta_description %}{{ article.summary[:160] }}{% endblock %}
+{% block og_title %}{{ article.title }}{% endblock %}
+{% block jsonld %}{% set art_ld = {"@context": "https://schema.org", "@type": "Article", "headline": article.title, "description": article.summary, "author": {"@type": "Physician", "name": "Dr. Balduino Andrade"}, "mainEntityOfPage": site_url ~ request.path} %}{% if article.published_at %}{% set _ = art_ld.update({"datePublished": article.published_at.strftime("%Y-%m-%d")}) %}{% endif %}{% if article.updated_at %}{% set _ = art_ld.update({"dateModified": article.updated_at.strftime("%Y-%m-%d")}) %}{% endif %}<script type="application/ld+json">{{ art_ld|tojson }}</script>{% endblock %}
+{% block og_description %}{{ article.summary }}{% endblock %}
+
+{% block content %}
+<article class="article-detail">
+    <!-- Article Header -->
+    <div class="article-header">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('public.index') }}">Início</a></li>
+                    <li class="breadcrumb-item"><a href="{{ url_for('public.artigos') }}">Artigos</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ article.title[:50] }}{% if article.title|length > 50 %}...{% endif %}</li>
+                </ol>
+            </nav>
+            <h1>{{ article.title }}</h1>
+            <div class="article-header-meta">
+                <span><i class="bi bi-calendar3"></i> {{ article.published_at.strftime("%d de %B de %Y") if article.published_at else article.created_at.strftime("%d de %B de %Y") }}</span>
+                <span class="mx-2">|</span>
+                <span><i class="bi bi-eye"></i> {{ article.view_count }} visualizações</span>
+                <span class="mx-2">|</span>
+                <span><i class="bi bi-person"></i> Dr. Balduino Andrade</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Article Cover -->
+    {% if article.cover_image %}
+    <div class="article-cover">
+        <img src="{{ url_for('static', filename='uploads/' + article.cover_image) }}" 
+             alt="Imagem de capa do artigo {{ article.title }}" class="img-fluid w-100" loading="eager">
+    </div>
+    {% endif %}
+
+    <!-- Article Content -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="article-content-body">
+                    <p class="article-lead">{{ article.summary }}</p>
+                    <div class="article-text">
+                        {{ article.content|safe }}
+                    </div>
+                </div>
+
+                <div class="article-footer">
+                    <div class="alert alert-info d-flex align-items-center" role="alert">
+                        <i class="bi bi-info-circle-fill me-2 fs-5"></i>
+                        <div>Este conteúdo possui caráter exclusivamente informativo e <strong>não substitui uma avaliação médica individualizada</strong>.</div>
+                    </div>
+
+                    <div class="article-share">
+                        <span>Compartilhar:</span>
+                        <a href="https://wa.me/?text={{ request.url|urlencode }}" target="_blank" rel="noopener" aria-label="Compartilhar no WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.url|urlencode }}" target="_blank" rel="noopener" aria-label="Compartilhar no Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="https://twitter.com/intent/tweet?url={{ request.url|urlencode }}&text={{ article.title|urlencode }}" target="_blank" rel="noopener" aria-label="Compartilhar no Twitter"><i class="bi bi-twitter-x"></i></a>
+                    </div>
+
+                    <a href="{{ url_for('public.artigos') }}" class="btn btn-outline-primary mt-4">
+                        <i class="bi bi-arrow-left me-2"></i>Voltar para artigos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</article>
+{% endblock %}

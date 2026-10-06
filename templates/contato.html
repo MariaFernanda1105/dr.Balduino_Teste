@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Agendar consulta com nefrologista em Palmas – TO{% endblock %}
+{% block meta_description %}Agende consulta com o Dr. Balduino Andrade, nefrologista em Palmas – TO. Endereço, telefone, WhatsApp e agendamento online.{% endblock %}
+{% block jsonld %}<script type="application/ld+json">{{ physician_schema|tojson }}</script>{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <span class="eyebrow">Vamos conversar</span>
+        <h1 class="page-title">Agende o seu cuidado.</h1>
+        <p>Para informações sobre consultas, disponibilidade e local de atendimento, fale diretamente com a equipe.</p>
+        <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{{ url_for('public.index') }}">Início</a></li><li class="breadcrumb-item active" aria-current="page">Contato</li></ol></nav>
+    </div>
+</section>
+
+<section class="section section-soft">
+    <div class="container">
+        <div class="contact-layout">
+            <div class="contact-card dark">
+                <span class="section-label">Canais oficiais</span>
+                <h2>Fale com a equipe.</h2>
+                <p>O primeiro contato ajuda a confirmar o serviço indicado, o local e os horários disponíveis para atendimento.</p>
+                <div class="contact-list">
+                    {% if whatsapp_number %}<div class="contact-row"><i class="bi bi-whatsapp"></i><div><strong>WhatsApp para agendamento</strong><span>Respostas em horário comercial</span></div></div>{% endif %}
+                    {% if clinic_phone %}<div class="contact-row"><i class="bi bi-telephone"></i><div><strong>Telefone</strong><span>{{ clinic_phone }}</span></div></div>{% endif %}
+                    {% if clinic_email %}<div class="contact-row"><i class="bi bi-envelope"></i><div><strong>E-mail</strong><span>{{ clinic_email }}</span></div></div>{% endif %}
+                    <div class="contact-row"><i class="bi bi-clock"></i><div><strong>Horário da equipe</strong><span>{{ clinic_hours }}</span></div></div>
+                </div>
+                <div class="contact-actions mt-4"><a href="{{ appointment_url }}" target="_blank" rel="noopener" class="btn btn-beige"><i class="bi bi-calendar2-check me-2"></i>Agendar consulta</a>{% if whatsapp_number %}<a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener" class="btn btn-outline-light"><i class="bi bi-whatsapp me-2"></i>WhatsApp</a>{% endif %}</div>
+            </div>
+            <div class="contact-card">
+                <span class="section-label">{{ clinic_name }}</span>
+                <h2>Informações da clínica.</h2>
+                <p>{{ clinic_subtitle }}. Os dados abaixo podem ser atualizados pela equipe conforme a operação da clínica.</p>
+                <div class="contact-list">
+                    <div class="contact-row"><i class="bi bi-geo-alt"></i><div><strong>Endereço</strong><span>{{ clinic_address }}<br>{{ clinic_city }}</span></div></div>
+                    <div class="contact-row"><i class="bi bi-calendar2-check"></i><div><strong>Atendimento sob agendamento</strong><span>Confirme previamente a disponibilidade e a documentação necessária.</span></div></div>
+                    <div class="contact-row"><i class="bi bi-shield-check"></i><div><strong>Privacidade e acolhimento</strong><span>Informações de saúde devem ser compartilhadas pelos canais oficiais da equipe.</span></div></div>
+                </div>
+                <div class="contact-actions mt-4"><a href="{{ clinic_map_url }}" target="_blank" rel="noopener" class="btn btn-primary"><i class="bi bi-map me-2"></i>Como chegar</a>{% if clinic_instagram %}<a href="{{ clinic_instagram }}" target="_blank" rel="noopener" class="btn btn-outline-primary"><i class="bi bi-instagram me-2"></i>Instagram</a>{% endif %}</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading centered"><span class="section-label">Antes da consulta</span><h2 class="section-title">Como se preparar para o atendimento.</h2><p class="section-description">Alguns cuidados simples tornam a conversa mais produtiva e ajudam a organizar a sua história clínica.</p></div>
+        <div class="expertise-grid">
+            <div class="expertise-card"><div class="expertise-icon"><i class="bi bi-file-earmark-medical"></i></div><h3>Leve seus exames</h3><p>Separe exames recentes e anteriores, quando disponíveis, para facilitar a comparação.</p></div>
+            <div class="expertise-card"><div class="expertise-icon"><i class="bi bi-capsule"></i></div><h3>Liste seus medicamentos</h3><p>Anote nomes e doses dos medicamentos e suplementos em uso.</p></div>
+            <div class="expertise-card"><div class="expertise-icon"><i class="bi bi-question-circle"></i></div><h3>Traga suas dúvidas</h3><p>Registrar perguntas antes da consulta ajuda a aproveitar melhor o tempo com o médico.</p></div>
+        </div>
+        <div class="info-note"><i class="bi bi-exclamation-circle-fill"></i><span>Este canal é destinado a informações e agendamentos. Em caso de urgência ou emergência, procure imediatamente um serviço de pronto atendimento.</span></div>
+    </div>
+</section>
+
+<section class="cta-band"><div class="container cta-content"><div><h2>Pronto para dar o próximo passo?</h2><p>Entre em contato com a equipe da {{ clinic_name }} e confirme as opções de atendimento.</p></div>{% if whatsapp_number %}<a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener" class="btn btn-primary"><i class="bi bi-whatsapp me-2"></i>Agendar agora</a>{% endif %}</div></section>
+{% endblock %}

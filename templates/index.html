@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Nefrologista em Palmas – TO | Dr. Balduino Andrade{% endblock %}
+{% block meta_description %}Dr. Balduino Andrade, nefrologista em Palmas – TO. Prevenção, diagnóstico e acompanhamento da saúde renal, com informação clara e cuidado individualizado.{% endblock %}
+{% block jsonld %}<script type="application/ld+json">{{ physician_schema|tojson }}</script>{% endblock %}
+
+{% block content %}
+<section class="hero-section hero-carousel" id="inicio" aria-label="Destaques">
+    <div id="heroCarousel" class="carousel slide carousel-fade" data-autoplay="7000" aria-roledescription="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Retrato do Dr. Balduino Andrade"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Acompanhamento em nefrologia"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Informação em saúde renal"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="hero-slide">
+                    <div class="hero-slide-bg" style="background-image: url('{{ url_for('static', filename='images/doctor-portrait.jpeg') }}');"></div>
+                    <div class="hero-slide-overlay"></div>
+                    <div class="container hero-slide-content">
+                        <div class="hero-copy">
+                            <span class="eyebrow">Nefrologia clínica</span>
+                            <h1 class="hero-title">Cuidar dos rins é cuidar do futuro.</h1>
+                            <p class="hero-lead">Acompanhamento médico especializado para prevenção, investigação e tratamento das condições que impactam a saúde renal.</p>
+                            <div class="hero-actions">
+                                <a href="{{ appointment_url }}" target="_blank" rel="noopener" class="btn btn-beige"><i class="bi bi-calendar2-check me-2"></i>Agendar consulta</a>
+                                <a href="{{ url_for('public.sobre') }}" class="btn btn-outline-light"><i class="bi bi-arrow-down-right me-2"></i>Conheça o médico</a>
+                            </div>
+                            <p class="hero-note"><i class="bi bi-check2-circle me-1"></i>Escuta atenta, informação clara e plano de cuidado individualizado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="hero-slide">
+                    <div class="hero-slide-bg" style="background-image: url('{{ url_for('static', filename='images/clinic-care.jpg') }}');"></div>
+                    <div class="hero-slide-overlay"></div>
+                    <div class="container hero-slide-content">
+                        <div class="hero-copy">
+                            <span class="eyebrow">Prevenção e acompanhamento</span>
+                            <h2 class="hero-title">Um cuidado pensado para acompanhar cada fase.</h2>
+                            <p class="hero-lead">Da avaliação de exames ao acompanhamento contínuo, a consulta organiza informações e define próximos passos com clareza.</p>
+                            <div class="hero-actions"><a href="{{ url_for('public.especialidades') }}" class="btn btn-beige"><i class="bi bi-arrow-right-circle me-2"></i>Conheça a atuação</a><a href="#jornada" class="btn btn-outline-light"><i class="bi bi-signpost-split me-2"></i>Veja a jornada</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="hero-slide">
+                    <div class="hero-slide-bg" style="background-image: url('{{ url_for('static', filename='images/article-care.jpg') }}');"></div>
+                    <div class="hero-slide-overlay"></div>
+                    <div class="container hero-slide-content">
+                        <div class="hero-copy">
+                            <span class="eyebrow">Educação em saúde</span>
+                            <h2 class="hero-title">Informação também faz parte do cuidado.</h2>
+                            <p class="hero-lead">Conteúdos para ajudar você a compreender melhor a saúde renal e conversar com mais segurança durante a consulta.</p>
+                            <div class="hero-actions"><a href="{{ url_for('public.artigos') }}" class="btn btn-beige"><i class="bi bi-journal-text me-2"></i>Ler conteúdos</a>{% if whatsapp_number %}<a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener" class="btn btn-outline-light"><i class="bi bi-whatsapp me-2"></i>Falar com a equipe</a>{% endif %}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Anterior</span></button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Próximo</span></button>
+    </div>
+</section>
+
+<section class="trust-strip" aria-label="Diferenciais do atendimento">
+    <div class="container trust-grid">
+        <div class="trust-item">
+            <div class="trust-icon"><i class="bi bi-person-check"></i></div>
+            <div><strong>Atendimento individualizado</strong><span>Tempo para ouvir, investigar e orientar.</span></div>
+        </div>
+        <div class="trust-item">
+            <div class="trust-icon"><i class="bi bi-clipboard2-pulse"></i></div>
+            <div><strong>Decisões compartilhadas</strong><span>Informação para participar do cuidado.</span></div>
+        </div>
+        <div class="trust-item">
+            <div class="trust-icon"><i class="bi bi-shield-check"></i></div>
+            <div><strong>Visão preventiva</strong><span>Foco em proteção renal e qualidade de vida.</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-soft" id="sobre">
+    <div class="container">
+        <div class="profile-layout">
+            <div class="profile-media">
+                <img class="profile-image" src="{{ url_for('static', filename='images/doctor-portrait.jpeg') }}" alt="Retrato profissional do Dr. Balduino Andrade" loading="lazy">
+                <div class="profile-caption"><strong>Dr. Balduino Andrade</strong><span>Nefrologista · cuidado especializado para a saúde renal</span></div>
+            </div>
+            <div class="profile-copy">
+                <span class="section-label">O especialista</span>
+                <h2 class="section-title">Conhecimento técnico com uma relação de confiança.</h2>
+                            <p class="lead">O cuidado nefrológico começa antes do diagnóstico e continua em cada decisão. A consulta considera exames, sintomas e o risco cardiovascular e renal de cada paciente.</p>
+                            <p>Cuidar dos rins é também cuidar da saúde como um todo: o acompanhamento combina avaliação clínica, leitura cuidadosa dos exames e orientação prática.</p>
+                <div class="credentials">
+                    <div class="credential"><i class="bi bi-mortarboard"></i><span><strong>Formação profissional</strong><small>{{ doctor_training }}</small></span></div>
+                    <div class="credential"><i class="bi bi-award"></i><span><strong>Área de atuação</strong><small>Nefrologia clínica e saúde renal</small></span></div>
+                    {% if doctor_crm %}<div class="credential"><i class="bi bi-patch-check"></i><span><strong>CRM</strong><small>{{ doctor_crm }}</small></span></div>{% endif %}
+                    {% if doctor_rqe %}<div class="credential"><i class="bi bi-patch-check-fill"></i><span><strong>RQE</strong><small>{{ doctor_rqe }}</small></span></div>{% endif %}
+                </div>
+                <a href="{{ url_for('public.sobre') }}" class="btn btn-outline-primary mt-4">Ver perfil profissional <i class="bi bi-arrow-right ms-2"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="atuacao">
+    <div class="container">
+        <div class="section-heading centered">
+            <span class="section-label">Áreas de atuação</span>
+            <h2 class="section-title">Cuidado para diferentes momentos da saúde renal.</h2>
+            <p class="section-description">A nefrologia acompanha desde a prevenção e a investigação de alterações em exames até o cuidado contínuo de doenças renais.</p>
+        </div>
+        <div class="expertise-grid">
+            <div class="expertise-card"><div class="expertise-icon"><i class="bi bi-heart-pulse"></i></div><h3>Doença renal crônica</h3><p>Investigação, estadiamento e acompanhamento ao longo das diferentes fases.</p></div>
+            <div class="expertise-card"><div class="expertise-icon"><i class="bi bi-activity"></i></div><h3>Hipertensão arterial</h3><p>Avaliação e controle da pressão com foco na proteção dos rins.</p></div>
+            <div class="expertise-card"><div class="expertise-icon"><i class="bi bi-shield-plus"></i></div><h3>Prevenção renal</h3><p>Orientação para pessoas com fatores de risco ou histórico familiar.</p></div>
+            <div class="expertise-card"><div class="expertise-icon"><i class="bi bi-droplet"></i></div><h3>Cálculo renal</h3><p>Investigação e estratégias para reduzir a recorrência de cálculos.</p></div>
+            <div class="expertise-card"><div class="expertise-icon"><i class="bi bi-file-earmark-medical"></i></div><h3>Alterações em exames</h3><p>Avaliação de creatinina, proteinúria, hematúria e outros achados.</p></div>
+            <div class="expertise-card"><div class="expertise-icon"><i class="bi bi-hospital"></i></div><h3>Terapia renal substitutiva</h3><p>Acompanhamento clínico quando a terapia renal é indicada.</p></div>
+        </div>
+        <div class="text-center mt-4"><a href="{{ url_for('public.especialidades') }}" class="btn btn-outline-primary">Conheça todas as áreas <i class="bi bi-arrow-right ms-2"></i></a></div>
+    </div>
+</section>
+
+<section class="section section-beige" id="jornada">
+    <div class="container">
+        <div class="process-layout">
+            <div class="process-intro">
+                <span class="section-label">A experiência</span>
+                <h2 class="section-title">Uma jornada de cuidado com começo, meio e acompanhamento.</h2>
+                <p>Mais do que solicitar exames, uma consulta de nefrologia é um momento para organizar informações, esclarecer dúvidas e construir prioridades.</p>
+                <blockquote class="journey-quote">“Mais importante do que interpretar um exame isoladamente é compreender o paciente por trás dele.”</blockquote>
+                <a href="{{ url_for('public.contato') }}" class="btn btn-primary mt-3">Fale com a equipe <i class="bi bi-arrow-up-right ms-2"></i></a>
+            </div>
+            <div class="process-list">
+                <div class="process-step"><div></div><div><h3>Avaliação clínica</h3><p>Entender sintomas, rotina, histórico familiar, hábitos e objetivos de saúde.</p></div></div>
+                <div class="process-step"><div></div><div><h3>Análise dos exames</h3><p>Interpretar resultados disponíveis e a evolução ao longo do tempo.</p></div></div>
+                <div class="process-step"><div></div><div><h3>Fatores de risco</h3><p>Identificar riscos cardiovasculares, renais, medicamentos e condições associadas.</p></div></div>
+                <div class="process-step"><div></div><div><h3>Investigação diagnóstica</h3><p>Solicitar ou organizar exames complementares quando realmente necessários.</p></div></div>
+                <div class="process-step"><div></div><div><h3>Definição do tratamento</h3><p>Explicar possibilidades e construir orientações compatíveis com cada caso.</p></div></div>
+                <div class="process-step"><div></div><div><h3>Acompanhamento da evolução</h3><p>Reavaliar resultados e ajustar o cuidado em parceria com o paciente.</p></div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="clinica">
+    <div class="container">
+        <div class="clinic-panel">
+            <div class="clinic-visual">
+                <div class="clinic-badge"><i class="bi bi-geo-alt-fill"></i> {{ clinic_city }}</div>
+            </div>
+            <div class="clinic-content">
+                <span class="section-label">Onde acontece o cuidado</span>
+                <h2>{{ clinic_name }}</h2>
+                <p class="clinic-subtitle">{{ clinic_subtitle }}</p>
+                <div class="clinic-facts">
+                    <div class="clinic-fact"><i class="bi bi-geo-alt-fill"></i><div><strong>Endereço</strong><span>{{ clinic_address }}<br>{{ clinic_city }}</span></div></div>
+                    <div class="clinic-fact"><i class="bi bi-clock-fill"></i><div><strong>Horários</strong><span>{{ clinic_hours }}</span></div></div>
+                    {% if clinic_phone %}<div class="clinic-fact"><i class="bi bi-telephone-fill"></i><div><strong>Telefone</strong><span>{{ clinic_phone }}</span></div></div>{% endif %}
+                    {% if clinic_email %}<div class="clinic-fact"><i class="bi bi-envelope-fill"></i><div><strong>E-mail</strong><span>{{ clinic_email }}</span></div></div>{% endif %}
+                </div>
+                <div class="clinic-actions"><a href="{{ clinic_map_url }}" target="_blank" rel="noopener" class="btn btn-light-custom"><i class="bi bi-map me-2"></i>Como chegar</a>{% if whatsapp_number %}<a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener" class="btn btn-beige"><i class="bi bi-whatsapp me-2"></i>Confirmar atendimento</a>{% endif %}</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-soft" id="conteudos">
+    <div class="container">
+        <div class="section-heading">
+            <span class="section-label">Conteúdos para pacientes</span>
+            <h2 class="section-title">Informação também faz parte do cuidado.</h2>
+            <p class="section-description ms-0">Materiais para compreender melhor a saúde renal e conversar com mais segurança durante a consulta.</p>
+        </div>
+        {% if articles %}
+        <div class="article-grid">
+            {% for article in articles %}
+            <article class="article-card">
+                <a href="{{ url_for('public.artigo_detalhes', slug=article.slug) }}" class="article-image-link">
+                    {% if article.cover_image %}<img src="{{ url_for('static', filename='uploads/' + article.cover_image) }}" alt="Capa do artigo: {{ article.title }}" class="article-image" loading="lazy">
+                    {% else %}<img src="{{ url_for('static', filename='images/article-care.jpg') }}" alt="Imagem ilustrativa de saúde" class="article-image" loading="lazy">{% endif %}
+                </a>
+                <div class="article-body">
+                    <div class="article-meta"><i class="bi bi-calendar3 me-1"></i>{{ article.published_at.strftime("%d/%m/%Y") if article.published_at else article.created_at.strftime("%d/%m/%Y") }}</div>
+                    <h3 class="article-title"><a href="{{ url_for('public.artigo_detalhes', slug=article.slug) }}">{{ article.title }}</a></h3>
+                    <p class="article-summary">{{ article.summary[:140] }}{% if article.summary|length > 140 %}...{% endif %}</p>
+                    <a href="{{ url_for('public.artigo_detalhes', slug=article.slug) }}" class="article-link">Ler conteúdo <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4"><a href="{{ url_for('public.artigos') }}" class="btn btn-outline-primary">Ver todos os conteúdos <i class="bi bi-arrow-right ms-2"></i></a></div>
+        {% else %}
+        <div class="text-center py-4"><i class="bi bi-journal-text display-5 text-muted"></i><p class="text-muted mt-3">Novos conteúdos serão publicados em breve.</p></div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="cta-band">
+    <div class="container cta-content">
+        <div><h2>O próximo passo começa com uma conversa.</h2><p>Para informações e agendamento, fale com a equipe da {{ clinic_name }}.</p></div>
+        {% if whatsapp_number %}<a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener" class="btn btn-primary"><i class="bi bi-whatsapp me-2"></i>Agendar consulta</a>{% else %}<a href="{{ url_for('public.contato') }}" class="btn btn-primary">Entrar em contato <i class="bi bi-arrow-right ms-2"></i></a>{% endif %}
+    </div>
+</section>
+{% endblock %}

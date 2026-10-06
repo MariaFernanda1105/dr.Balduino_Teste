@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Dr. Balduino Andrade | Nefrologista em Palmas – TO{% endblock %}
+{% block meta_description %}Conheça o Dr. Balduino Andrade, nefrologista em Palmas – TO, dedicado ao cuidado integral e à prevenção da saúde renal.{% endblock %}
+{% block jsonld %}<script type="application/ld+json">{{ physician_schema|tojson }}</script>{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <span class="eyebrow">Perfil profissional</span>
+        <h1 class="page-title">Conheça o médico por trás do cuidado.</h1>
+        <p>Uma prática construída com conhecimento técnico, comunicação clara e atenção ao contexto de cada paciente.</p>
+        <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{{ url_for('public.index') }}">Início</a></li><li class="breadcrumb-item active" aria-current="page">O médico</li></ol></nav>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="detail-layout">
+            <div class="profile-media">
+                <img class="profile-image" src="{{ url_for('static', filename='images/doctor-portrait.jpeg') }}" alt="Retrato profissional do Dr. Balduino Andrade" loading="lazy">
+                <div class="profile-caption"><strong>Dr. Balduino Andrade</strong><span>Nefrologista</span></div>
+            </div>
+            <div class="detail-copy">
+                <span class="section-label">Dr. Balduino Andrade</span>
+                <h2>Medicina renal com proximidade e propósito.</h2>
+                <p>Com mais de 22 anos de atuação nos setores público e privado, o Dr. Balduino Andrade dedica-se ao diagnóstico, tratamento e acompanhamento das doenças renais em adultos.</p>
+                <p>O trabalho do nefrologista envolve olhar para além de um resultado isolado: histórico, sintomas, exames, hábitos e o risco cardiovascular e renal de cada pessoa.</p>
+                <blockquote class="journey-quote">Cuidar dos rins é também cuidar da saúde como um todo.</blockquote>
+
+                <h3>Formação e trajetória</h3>
+                <div class="timeline">
+                    <div class="timeline-item"><strong>Graduação em Medicina</strong><span>Informação institucional a ser atualizada pela equipe do médico.</span></div>
+                    <div class="timeline-item"><strong>Formação em Clínica Médica</strong><span>Informação institucional a ser atualizada pela equipe do médico.</span></div>
+                    <div class="timeline-item"><strong>Especialização em Nefrologia</strong><span>Informação institucional a ser atualizada pela equipe do médico.</span></div>
+                    <div class="timeline-item"><strong>Atualização contínua</strong><span>A prática médica é acompanhada por educação continuada e revisão constante de evidências.</span></div>
+                </div>
+
+                <div class="registry-box">
+                    <span><strong>CRM:</strong> {{ doctor_crm if doctor_crm else 'informação a confirmar' }}</span>
+                    <span><strong>RQE:</strong> {{ doctor_rqe if doctor_rqe else 'informação a confirmar' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-soft">
+    <div class="container">
+        <div class="section-heading centered">
+            <span class="section-label">Como o médico atua</span>
+            <h2 class="section-title">Um atendimento que combina precisão e acolhimento.</h2>
+            <p class="section-description">O objetivo é traduzir a complexidade da nefrologia em orientações possíveis, respeitando o ritmo e a realidade de cada paciente.</p>
+        </div>
+        <div class="expertise-grid">
+            <div class="expertise-card"><div class="expertise-icon"><i class="bi bi-chat-square-text"></i></div><h3>Escuta ativa</h3><p>Uma consulta começa com espaço para contar sua história e tirar dúvidas.</p></div>
+            <div class="expertise-card"><div class="expertise-icon"><i class="bi bi-search-heart"></i></div><h3>Raciocínio clínico</h3><p>Exames e sintomas são analisados dentro do contexto individual de cada pessoa.</p></div>
+            <div class="expertise-card"><div class="expertise-icon"><i class="bi bi-signpost-split"></i></div><h3>Orientação clara</h3><p>Próximos passos explicados de forma acessível, transparente e responsável.</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="section-heading">
+            <span class="section-label">Áreas de atuação</span>
+            <h2 class="section-title">Onde a nefrologia pode ajudar.</h2>
+        </div>
+        <ul class="area-list">
+            <li><i class="bi bi-check-circle-fill"></i>Doença renal crônica</li>
+            <li><i class="bi bi-check-circle-fill"></i>Hipertensão arterial</li>
+            <li><i class="bi bi-check-circle-fill"></i>Prevenção renal</li>
+            <li><i class="bi bi-check-circle-fill"></i>Cálculo renal</li>
+            <li><i class="bi bi-check-circle-fill"></i>Alterações na função renal</li>
+            <li><i class="bi bi-check-circle-fill"></i>Acompanhamento clínico</li>
+        </ul>
+        <div class="info-note"><i class="bi bi-info-circle-fill"></i><span>As informações sobre formação, registros e serviços devem ser confirmadas diretamente com a equipe antes da publicação definitiva.</span></div>
+    </div>
+</section>
+{% endblock %}

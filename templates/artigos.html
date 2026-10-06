@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Artigos sobre saúde renal | Nefrologista em Palmas – TO{% endblock %}
+{% block meta_description %}Artigos do Dr. Balduino Andrade, nefrologista em Palmas – TO, sobre saúde renal, prevenção, hipertensão e cuidados com os rins.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <span class="eyebrow">Informação em saúde</span>
+        <h1 class="page-title">Conteúdos para cuidar melhor.</h1>
+        <p>Materiais para entender a saúde renal e chegar à consulta com mais informação e segurança.</p>
+        <nav aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="{{ url_for('public.index') }}">Início</a></li><li class="breadcrumb-item active" aria-current="page">Conteúdos</li></ol></nav>
+    </div>
+</section>
+
+<section class="section section-soft">
+    <div class="container">
+        <div class="section-heading centered"><span class="section-label">Blog médico</span><h2 class="section-title">Saúde renal em linguagem clara.</h2><p class="section-description">Informação geral para apoiar conversas mais conscientes com profissionais de saúde.</p></div>
+        {% if articles %}
+        <div class="article-grid">
+            {% for article in articles %}
+            <article class="article-card">
+                <a href="{{ url_for('public.artigo_detalhes', slug=article.slug) }}" class="article-image-link">
+                    {% if article.cover_image %}<img src="{{ url_for('static', filename='uploads/' + article.cover_image) }}" alt="Capa do artigo: {{ article.title }}" class="article-image" loading="lazy">
+                    {% else %}<img src="{{ url_for('static', filename='images/article-care.jpg') }}" alt="Imagem ilustrativa de saúde" class="article-image" loading="lazy">{% endif %}
+                </a>
+                <div class="article-body">
+                    <div class="article-meta"><i class="bi bi-calendar3 me-1"></i>{{ article.published_at.strftime("%d/%m/%Y") if article.published_at else article.created_at.strftime("%d/%m/%Y") }}</div>
+                    <h2 class="article-title"><a href="{{ url_for('public.artigo_detalhes', slug=article.slug) }}">{{ article.title }}</a></h2>
+                    <p class="article-summary">{{ article.summary[:160] }}{% if article.summary|length > 160 %}...{% endif %}</p>
+                    <a href="{{ url_for('public.artigo_detalhes', slug=article.slug) }}" class="article-link">Ler conteúdo <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5"><i class="bi bi-journal-text display-5 text-muted"></i><p class="text-muted mt-3">Nenhum conteúdo publicado ainda. Volte em breve.</p></div>
+        {% endif %}
+    </div>
+</section>
+
+<section class="cta-band"><div class="container cta-content"><div><h2>Tem dúvidas sobre a sua saúde renal?</h2><p>Converse com a equipe para entender as opções de atendimento.</p></div>{% if whatsapp_number %}<a href="https://wa.me/{{ whatsapp_number }}" target="_blank" rel="noopener" class="btn btn-primary"><i class="bi bi-whatsapp me-2"></i>Falar com a equipe</a>{% else %}<a href="{{ url_for('public.contato') }}" class="btn btn-primary">Entrar em contato</a>{% endif %}</div></section>
+{% endblock %}
